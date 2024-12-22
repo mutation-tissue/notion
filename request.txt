@@ -1,1 +1,5 @@
 request==2.32.3
+langchain
+openai
+langchain_openai
+python-dotenv
