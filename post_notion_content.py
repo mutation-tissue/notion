@@ -59,24 +59,39 @@ template = {
                     }
                 ]
             }
+        },
+        {
+            "object": "block",
+            "type": "paragraph",
+            "paragraph": {
+                "rich_text": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "これはサンプルの段落テキストです。",
+                        }
+                    }
+                ]
+            }
         }
     ]
 }
 
 "今後はcreateに変更して複数のURLやテキストを追加できるようにする予定"
-def  update_template(title, content, url):
+def  update_template(title, url, summerize, quize):
     new_template = template.copy()
     new_template["properties"]["title"][0]["text"]["content"] = title
     new_template["children"][0]["paragraph"]["rich_text"][0]["text"]["content"] = "要約元ページ(notion内)"
     new_template["children"][0]["paragraph"]["rich_text"][0]["text"]["link"]["url"] = url
-    new_template["children"][1]["paragraph"]["rich_text"][0]["text"]["content"] = content
+    new_template["children"][1]["paragraph"]["rich_text"][0]["text"]["content"] = summerize
+    new_template["children"][2]["paragraph"]["rich_text"][0]["text"]["content"] = quize
 
     return new_template
 
-def send_request(title, content, source_url):
+def send_request(title, source_url, summerize, quize):
     # リクエスト送信
     print(sub_page_url)
-    send_message = update_template(title, content, source_url)
+    send_message = update_template(title, source_url, summerize, quize)
     response = requests.post(sub_page_url, headers=headers, json=send_message)
 
     # レスポンス確認

@@ -12,10 +12,18 @@ headers = {
     "Notion-Version": "2022-06-28",
 }
 
-def get_sub_page_ids(parent_page_id):
+def get_sub_page_ids(parent_page_id,next_cursor=None):
     """親ページ内のサブページ数をカウントする"""
     url = f"https://api.notion.com/v1/blocks/{parent_page_id}/children"
-    response = requests.get(url, headers=headers)
+
+    # ペイロードの作成
+    params = {
+        "page_size": 100
+    }
+    if next_cursor:
+        params["start_cursor"] = next_cursor
+
+    response = requests.get(url, headers=headers, params=params)
     data = response.json()
     sub_page_ids = [
         block["id"] for block in data.get("result", [])
