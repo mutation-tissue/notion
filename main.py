@@ -1,10 +1,10 @@
-import requests
+import get_notion_content
 import os
 
-# 環境変数を取得
-API_KEY = os.getenv("NOTION_API_KEY")
 PARENT_PAGE_ID = os.getenv("PARENT_PAGE_ID")
+# サブページの数を取得
+data = get_notion_content.get_sub_page_ids(PARENT_PAGE_ID)
+data = get_notion_content.get_sub_page_ids(data["results"][21]["id"])
+data = get_notion_content.get_palan_text(data)
 
-print(f"API_KEY: {API_KEY}")
-print(f"PARENT_PAGE_ID: {PARENT_PAGE_ID}")
-
+#pprint.pprint(data)
